@@ -412,6 +412,9 @@ brew cask install slack --appdir=/Applications
 #removed adium
 #brew cask install adium --appdir=/Applications
 
+## INSTALL OFFICE 
+brew cask install microsoft-office --appdir=/Applications
+
 ## INSTALL BACKUP APPS
 #brew cask install backblaze carbon-copy-cloner --appdir=/Applications
 
