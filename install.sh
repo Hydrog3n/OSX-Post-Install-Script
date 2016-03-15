@@ -360,6 +360,7 @@ brew cask install visual-studio-code --appdir=/Applications
 ## Now Add intellij Ide 
 brew cask install intellij-idea --appdir=/Applications
 brew cask install phpstorm --appdir=/Applications
+brew cask install kaleidoscope --appdir=/Applications
 
 ## Install netbeans
 brew cask install netbeans --appdir=/Applications
