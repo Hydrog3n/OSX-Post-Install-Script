@@ -5,10 +5,10 @@
 sudo defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 ## SET HOSTNAME IN ALL THE RIGHT PLACES
-sudo scutil --set ComputerName "STRING"
-sudo scutil --set HostName "STRING"
-sudo scutil --set LocalHostName "STRING"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "STRING"
+sudo scutil --set ComputerName "Hydrobook"
+sudo scutil --set HostName "hydrobook"
+sudo scutil --set LocalHostName "hydrobook.local"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "hydrobook"
 
 ## TURN OFF SCREENSAVER PASSWORD DELAY
 defaults write com.apple.screensaver askForPassword -int 1
@@ -21,17 +21,17 @@ defaults write com.apple.print.PrintingPrefs “Quit When Finished” -bool true
 #defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 ## TRACKPAD: MAP BOTTOM RIGHT CORNER TO RIGHT-CLICK
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
-defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
-defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
+#defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
+#defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+#defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
+#defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
 
 ## SHOW PERCENTAGE IN BATTERY STATUS
 defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 defaults write com.apple.menuextra.battery ShowTime -string "NO"
 
 ## DISABLE NATURAL SCROLLING
-defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+#defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 ## ENABLE TAB IN MODAL DIALOGS
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
@@ -50,7 +50,7 @@ sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutio
 #defaults write com.apple.finder AppleShowAllFiles -bool true
 
 ##FINDER: SHOW ALL FILENAME EXTENSIONS
-#defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
 ##FINDER: SHOW STATUS BAR
 #defaults write com.apple.finder ShowStatusBar -bool true
@@ -73,10 +73,10 @@ sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutio
 
 ##USE LIST VIEW IN ALL FINDER WINDOWS BY DEFAULT
 ##YOU CAN SET THE OTHER VIEW MODES BY USING ONE OF THESE FOUR-LETTER CODES: ICNV, CLMV, FLWV
-defaults write com.apple.finder FXPreferredViewStyle -string “Nlsv”
+#defaults write com.apple.finder FXPreferredViewStyle -string “Nlsv”
 
 ##DISABLE THE WARNING BEFORE EMPTYING THE TRASH
-defaults write com.apple.finder WarnOnEmptyTrash -bool false
+#defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
 # EMPTY TRASH SECURELY BY DEFAULT
 # defaults write com.apple.finder EmptyTrashSecurely -bool true
@@ -146,10 +146,10 @@ defaults write com.apple.dock autohide-time-modifier -float 0
 #defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ## SHOW ICONS FOR HARD DRIVES, SERVERS, AND REMOVABLE MEDIA ON THE DESKTOP
-defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
-defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
 
 ## TURN OFF DISK IMAGE VERIFICATION - POSSIBLE SECURITY PROBLEM - UNCOMMENT IF YOU WANT THIS
 #defaults write com.apple.frameworks.diskimages skip-verify -bool true
@@ -220,7 +220,8 @@ defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 defaults write com.apple.finder DisableAllAnimations -bool true
 
 ## SET REASONABLE SCREEN CAPTURE DEFAULTS
-defaults write com.apple.screencapture location -string "$HOME/Desktop"
+mkdir "$HOME/Screenshot"
+defaults write com.apple.screencapture location -string "$HOME/Screenshot"
 defaults write com.apple.screencapture type -string "png"
 
 ## SET FINDER TO DEFAULT TO $HOME
@@ -292,7 +293,7 @@ defaults write com.apple.mail NSUserKeyEquivalents -dict-add “Send” “@U21a
 
 ## Remove items from dock that you won't use
 ##
-dloc=$(defaults read com.apple.dock persistent-apps | grep _CFURLString\" | awk '/Mail/ {print NR}') && /usr/libexec/PlistBuddy -c "Delete persistent-apps:$dloc" ~/Library/Preferences/com.apple.dock.plist && killall Dock
+#dloc=$(defaults read com.apple.dock persistent-apps | grep _CFURLString\" | awk '/Mail/ {print NR}') && /usr/libexec/PlistBuddy -c "Delete persistent-apps:$dloc" ~/Library/Preferences/com.apple.dock.plist && killall Dock
 dloc=$(defaults read com.apple.dock persistent-apps | grep _CFURLString\" | awk '/Contacts/ {print NR}') && /usr/libexec/PlistBuddy -c "Delete persistent-apps:$dloc" ~/Library/Preferences/com.apple.dock.plist && killall Dock
 dloc=$(defaults read com.apple.dock persistent-apps | grep _CFURLString\" | awk '/Calendar/ {print NR}') && /usr/libexec/PlistBuddy -c "Delete persistent-apps:$dloc" ~/Library/Preferences/com.apple.dock.plist && killall Dock
 dloc=$(defaults read com.apple.dock persistent-apps | grep _CFURLString\" | awk '/Reminders/ {print NR}') && /usr/libexec/PlistBuddy -c "Delete persistent-apps:$dloc" ~/Library/Preferences/com.apple.dock.plist && killall Dock
@@ -316,18 +317,21 @@ defaults write com.apple.DiskUtility advanced-image-options -bool true
 ## INSTALL HOMEBREW AND COMMANDLINE TOOLS MISSING IN OSX, ALONG WITH SOME PRETTINESS
 xcode-select --install
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew install wget cmake watch gnu-sed coreutils psutils tmux tmux-mem-cpu-load git zsh mc wget vim
+brew install wget cmake watch gnu-sed coreutils psutils tmux tmux-mem-cpu-load git zsh mc wget vim htop-osx ssh-copy-id plantuml
 
 ## INSTALL OH MY ZSH AND SET ZSH AS DEFAULT SHELL
 sudo curl -L http://install.ohmyz.sh | sh
 chsh -s /bin/zsh
 git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
 
+## INSTALL APP WITH BREW 
+brew install 
+
 ## INSTALL CASKROOM AND ALL APPLICATIONS
 brew install caskroom/cask/brew-cask
  
 ## CODING TOOLS
-brew cask install bee iterm2 sourcetree github-desktop chefdk
+brew cask install iterm2 --appdir=/Applications
 
 ## PICK AN EDITOR
 #brew cask install sublime-text
@@ -351,6 +355,14 @@ brew cask install bee iterm2 sourcetree github-desktop chefdk
 
 ## Now Defaults to Atom from GitHub (Using /Applications for .app)
 brew cask install atom --appdir=/Applications
+brew cask install visual-studio-code --appdir=/Applications
+
+## Now Add intellij Ide 
+brew cask install intellij-idea --appdir=/Applications
+brew cask install phpstorm --appdir=/Applications
+
+## Install netbeans
+brew cask install netbeans --appdir=/Applications
 
 #brew cask install textwrangler 
 
@@ -359,7 +371,7 @@ brew cask install balsamiq-mockups --appdir=/Applications
 #brew cask install pencil
 
 ## SYSTEM UTILITIES 
-brew cask install disk-inventory-x moom unetbootin istat-menus alfred caffeine keepassx cyberduck rescuetime the-unarchiver logmein-client royal-tsx jdownloader lastfm --appdir=/Applications
+brew cask install disk-inventory-x moom unetbootin istat-menus caffeine cyberduck rescuetime the-unarchiver --appdir=/Applications
 
 ## VIRTUALIZATION / CONTAINERS
 ###Removed these by default in case you're deploying a VM
@@ -371,11 +383,11 @@ brew cask install dockertoolbox
 #wget https://github.com/docker/toolbox/releases/download/v1.8.3/DockerToolbox-1.8.3.pkg
 #sudo installer -pkg DockerToolbox-1.8.3.pkg -target /
 ###Otto from Hashicorp (Replacing Vagrant brew cask)
-brew cask install otto
+#brew cask install otto
 
 ## GRAPHICS APPS
 ## Set "wacom-tablet" to "wacom-bamboo-tablet" for bamboo users
-brew cask install google-nik-collection wacom-tablet adobe-creative-cloud --appdir=/Applications
+#brew cask install google-nik-collection wacom-tablet adobe-creative-cloud --appdir=/Applications
 
 ## BROWSERS - UNCOMMENT YOUR FAVOURITE AND/OR INSTALL THEM ALL #################################################
 ## INSTALL CHROME, REMOTE DESKTOP, CHROMECAST AND TURN OFF ANNOYING SWIPE LEFT RIGHT BEHAVIOUR
@@ -394,19 +406,19 @@ brew cask install navicat-for-postgresql --appdir=/Applications
 #brew cask install toad --appdir=/Applications
 
 ## INSTANT MESSAGING
-brew cask install colloquy slack --appdir=/Applications
+brew cask install slack --appdir=/Applications
 #removed adium
 #brew cask install adium --appdir=/Applications
 
 ## INSTALL BACKUP APPS
-brew cask install backblaze carbon-copy-cloner --appdir=/Applications
+#brew cask install backblaze carbon-copy-cloner --appdir=/Applications
 
 ## BROWSER PLUGINS
-brew cask install silverlight flash-player --appdir=/Applications
+#brew cask install silverlight flash-player --appdir=/Applications
 ###Lastpass Universal removed :(
 #brew cask install lastpass-universal --appdir=/Applications
 ## SPOTIFY
-brew cask install spotify spotify-notifications --appdir=/Applications
+#brew cask install spotify spotify-notifications --appdir=/Applications
 ###removed spotify menubar
 #brew cask install spotify-menubar --appdir=/Applications
 
@@ -414,9 +426,9 @@ brew cask install spotify spotify-notifications --appdir=/Applications
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
 ## INSTALL AWS CLI
-wget https://bootstrap.pypa.io/get-pip.py
-sudo python get-pip.py
-sudo pip install awscli
+#wget https://bootstrap.pypa.io/get-pip.py
+#sudo python get-pip.py
+#sudo pip install awscli
 
 ## WARN USER
 ###RUB SOME SLEEP ON IT!
@@ -427,16 +439,16 @@ echo Address Book, Calendar, Contacts, Dashboard, Dock, Finder, Mail, Safari, Sy
 #for app in "Address Book" "Calendar" "Contacts" "Dashboard" "Dock" "Finder" "Mail" "Safari" "SystemUIServer" "Terminal" "iCal" "iTunes"; do killall "$app" > /dev/null 2>&1 done
 
 ## ADD CYBERDOCK TO DOCK
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Cyberduck.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
+#defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Cyberduck.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
 
 ## ADD SPOTIFY TO DOCK
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Spotify.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
+#defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Spotify.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
 
 ## ADD Sublime TO DOCK
 #defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Sublime Text 2.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
 
 ## ADD ATOM TO DOCK
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Atom.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
+#defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Atom.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
 ##Restart Dock
 killall Dock
 
