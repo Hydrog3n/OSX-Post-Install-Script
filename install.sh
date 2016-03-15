@@ -375,7 +375,7 @@ brew cask install 1password disk-inventory-x moom unetbootin istat-menus caffein
 
 ## VIRTUALIZATION / CONTAINERS
 ###Removed these by default in case you're deploying a VM
-#brew cask install vmware-fusion virtualbox
+brew cask install vmware-fusion virtualbox
 ###Removed the following in favour of new flavours
 #brew cask install boot2docker vagrant
 ###Docker Toolbox
